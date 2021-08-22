@@ -6,7 +6,8 @@ public class Produto {
 
     private int id;
     private String nome;
-    private List<Integer> categoriaIDs;
+    private List<Integer> categoriaIds;
+    private List<Categoria> categorias;
     private String marca;
     private double preco;
     private int estoque;
@@ -14,6 +15,14 @@ public class Produto {
 
     public Produto() {
         estaAtivo = true;
+    }
+
+    public List<Categoria> getCategoriasPrd() {
+        return categorias;
+    }
+
+    public void setCategoriasPrd(List<Categoria> categoriasProd) {
+        this.categorias = categoriasProd;
     }
 
     public int getEstoque() {
@@ -44,12 +53,12 @@ public class Produto {
         this.nome = nome;
     }
 
-    public List<Integer> getCategoriaIDs() {
-        return categoriaIDs;
+    public List<Integer> getCategoriaIds() {
+        return categoriaIds;
     }
 
-    public void setCategoriaIDs(List<Integer> categoriaIDs) {
-        this.categoriaIDs = categoriaIDs;
+    public void setCategoriaIds(List<Integer> categoriaIds) {
+        this.categoriaIds = categoriaIds;
     }
 
     public String getMarca() {

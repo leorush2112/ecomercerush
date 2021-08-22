@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.Produto;
 
 import org.junit.jupiter.api.Assertions;
@@ -19,16 +20,27 @@ public class ProdutoRepositoryTest {
     public void preparar() {
         // instanciar ProdutoRepository
         produtoRepository = new ProdutoRepository();
+        List<Categoria> categorias = new ArrayList<>();
+    }
+
+    private Categoria criarCaregoria(List<Categoria> categorias) {
+
+        Categoria categoria = new Categoria();
+        categoria.setId(1);
+        categoria.setNome("Celulares");
+        categorias.add(categoria);
+
+        return categoria;
     }
 
     private Produto criarProduto() {
 
-        List<Integer> categoriasIDs = new ArrayList<>(); // criar lista de IDs e adicionar 1
-        categoriasIDs.add(1);
+        List<Integer> categoriaIds = new ArrayList<>(); // criar lista de IDs e adicionar 1
+        categoriaIds.add(1);
 
         Produto produto = new Produto();
         produto.setNome("Favora");
-        produto.setCategoriaIDs(categoriasIDs);
+        produto.setCategoriaIds(categoriaIds);
         produto.setEstoque(15);
         produto.setEstaAtivo(true);
         produto.setPreco(500.00);

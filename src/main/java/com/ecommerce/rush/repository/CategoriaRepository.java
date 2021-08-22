@@ -30,4 +30,8 @@ public class CategoriaRepository {
 
     }
 
+    public List<Categoria> buscarTodasCategorias() {
+        return categorias;
+    }
+
 }
