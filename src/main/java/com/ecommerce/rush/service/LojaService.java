@@ -1,8 +1,6 @@
 package com.ecommerce.rush.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.ecommerce.rush.repository.CategoriaRepository;
 import com.ecommerce.rush.repository.ProdutoRepository;
@@ -25,16 +23,14 @@ public class LojaService {
     }
 
     public Produto criarProduto(Produto produto) {
-        List<Categoria> categoriasPost = new ArrayList<>();
-        for (int i = 0; i < produto.getCategoriaIds().size(); i++) {
-            int id = produto.getCategoriaIds().get(i);
-            Optional<Categoria> categoriaAchou = categoriaRepository.buscarCategoria(id);
-            categoriasPost.add(categoriaAchou.get());
-            produto.setCategoriasPrd(categoriasPost);
-        }
+        List<Categoria> listaCategoria = categoriaRepository.obterListaCategoriasPorIds(produto.getCategoriaIds());
+        produto.setCategoriasPrd(listaCategoria);
         produtoRepository.inserirProduto(produto);
-
         return produto;
+    }
+
+    public List<Produto> listarTodosProdutos() {
+        return produtoRepository.buscarTodosProdutos();
     }
 
 }

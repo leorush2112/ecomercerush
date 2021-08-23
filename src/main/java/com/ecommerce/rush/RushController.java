@@ -1,9 +1,7 @@
 package com.ecommerce.rush;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.ecommerce.rush.repository.CategoriaRepository;
 import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.LojaService;
 import com.ecommerce.rush.service.Produto;
@@ -33,6 +31,11 @@ public class RushController {
     public Produto inserirProduto(@RequestBody Produto produto) {
         lojaService.criarProduto(produto);
         return produto;
+    }
+
+    @GetMapping("/produto")
+    public List<Produto> mostrarTodosProdutos() {
+        return lojaService.listarTodosProdutos();
     }
 
 }
