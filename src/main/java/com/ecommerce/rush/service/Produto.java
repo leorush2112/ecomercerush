@@ -7,7 +7,6 @@ public class Produto {
     private int id;
     private String nome;
     private List<Integer> categoriaIds;
-    private List<Categoria> categorias;
     private String marca;
     private double preco;
     private int estoque;
@@ -15,14 +14,6 @@ public class Produto {
 
     public Produto() {
         estaAtivo = true;
-    }
-
-    public List<Categoria> getCategoriasPrd() {
-        return categorias;
-    }
-
-    public void setCategoriasPrd(List<Categoria> categoriasProd) {
-        this.categorias = categoriasProd;
     }
 
     public int getEstoque() {

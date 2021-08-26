@@ -19,12 +19,16 @@ public class LojaService {
     }
 
     public List<Categoria> listarTodasCategorias() {
+
         return categoriaRepository.buscarTodasCategorias();
     }
 
+    public List<Categoria> buscarCategoriaPorListaDeIds(List<Integer> listaCategoriaIds){
+        return categoriaRepository.obterListaCategoriasPorIds(listaCategoriaIds);
+    }
+
     public Produto criarProduto(Produto produto) {
-        List<Categoria> listaCategoria = categoriaRepository.obterListaCategoriasPorIds(produto.getCategoriaIds());
-        produto.setCategoriasPrd(listaCategoria);
+        categoriaRepository.obterListaCategoriasPorIds(produto.getCategoriaIds());
         produtoRepository.inserirProduto(produto);
         return produto;
     }

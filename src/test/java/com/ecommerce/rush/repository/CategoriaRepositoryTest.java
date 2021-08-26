@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 public class CategoriaRepositoryTest {
 

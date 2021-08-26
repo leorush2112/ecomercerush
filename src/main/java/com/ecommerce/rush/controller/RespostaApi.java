@@ -1,4 +1,4 @@
-package com.ecommerce.rush;
+package com.ecommerce.rush.controller;
 
 public class RespostaApi {
 

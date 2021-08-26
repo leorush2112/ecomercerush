@@ -1,20 +1,22 @@
-package com.ecommerce.rush;
+package com.ecommerce.rush.controller;
 
 import java.util.List;
 
 import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.LojaService;
-import com.ecommerce.rush.service.Produto;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RushController {
+public class CategoriaController {
 
-    LojaService lojaService = new LojaService();
+    @Autowired    
+    LojaService lojaService;
 
     @PostMapping("/categoria")
     public Categoria inserirCategoria(@RequestBody Categoria categoria) {
@@ -25,17 +27,5 @@ public class RushController {
     @GetMapping("/categoria")
     public List<Categoria> mostrarTodasCategorias() {
         return lojaService.listarTodasCategorias();
-    }
-
-    @PostMapping("/produto")
-    public Produto inserirProduto(@RequestBody Produto produto) {
-        lojaService.criarProduto(produto);
-        return produto;
-    }
-
-    @GetMapping("/produto")
-    public List<Produto> mostrarTodosProdutos() {
-        return lojaService.listarTodosProdutos();
-    }
-
+    }    
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ecommerce.rush.service.Categoria;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,11 +35,11 @@ public class CategoriaRepository {
             Optional<Categoria> categoriaAchou = buscarCategoria(id);
             if (categoriaAchou.isPresent()) {
                 categoriasLista.add(categoriaAchou.get());
+            }else{
+                throw new CategoriaInexistenteException(id);
             }
         }
-        if (idsLista.size() != categoriasLista.size()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Categoria não encontrada");
-        }
+        
         return categoriasLista;
     }
 

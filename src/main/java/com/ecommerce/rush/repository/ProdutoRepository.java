@@ -52,5 +52,4 @@ public class ProdutoRepository {
     public List<Produto> buscarTodosProdutos() {
         return produtos;
     }
-
 }
