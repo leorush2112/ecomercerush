@@ -1,9 +1,9 @@
-package com.ecommerce.rush.repository;
+package com.ecommerce.rush.exception;
 
 public class CategoriaInexistenteException extends RuntimeException {
 
     public CategoriaInexistenteException (int id){
-        super("Categoria Não Encontrada: " +id); 
+        super("Categoria "+ id +" não Encontrada."); 
     }
     
 }

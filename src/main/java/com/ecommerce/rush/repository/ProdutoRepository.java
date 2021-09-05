@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ecommerce.rush.exception.CategoriaInexistenteException;
+import com.ecommerce.rush.exception.ValidacaoProdutoException;
+import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.Produto;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ProdutoRepository {
 
     private List<Produto> produtos = new ArrayList<>();
@@ -22,16 +26,13 @@ public class ProdutoRepository {
     // insere produto
     public void inserirProduto(Produto produto) {
         if (produto.getNome().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Obrigatório informar o nome do produto");
+            throw new ValidacaoProdutoException();
         }
         if (produto.getCategoriaIds().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Obrigatório informar a categoria do produto");
+            throw new ValidacaoProdutoException();
         }
         if (produto.getMarca().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Obrigatório informar a marca do produto");
+            throw new ValidacaoProdutoException();
         }
 
         int id = obterProximoID();
@@ -52,4 +53,20 @@ public class ProdutoRepository {
     public List<Produto> buscarTodosProdutos() {
         return produtos;
     }
+
+
+    public List<Produto> buscarProdutosPorCategoria(Categoria categoria){
+        List<Produto> produtosPorCategoria = new ArrayList<>();
+        
+        for(Produto produto : produtos ){
+            for(int i = 0 ; i < produto.getCategoriaIds().size(); i++){
+            
+            if(produto.getCategoriaIds().get(i) == categoria.getId() ){                                
+
+                produtosPorCategoria.add(produto);
+            }            
+        }           
+        } return produtosPorCategoria;
+    }
+
 }

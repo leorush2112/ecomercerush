@@ -3,7 +3,8 @@ package com.ecommerce.rush.controller;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.ecommerce.rush.repository.CategoriaInexistenteException;
+import com.ecommerce.rush.exception.CategoriaInexistenteException;
+import com.ecommerce.rush.exception.ValidacaoProdutoException;
 import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.LojaService;
 import com.ecommerce.rush.service.Produto;
@@ -25,6 +26,7 @@ public class ProdutoController {
     LojaService lojaService;
     
     @PostMapping("/produto")
+    @ResponseStatus(HttpStatus.CREATED)
     public ProdutoComCategorias inserirProduto(@RequestBody Produto produto) {
         Produto produtoInserido = lojaService.criarProduto(produto);
         List<Categoria> categorias = lojaService.buscarCategoriaPorListaDeIds(produtoInserido.getCategoriaIds());
@@ -47,6 +49,12 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public RespostaApi tratarCategoriaInexistente(CategoriaInexistenteException exception){
         return new RespostaApi(exception.getMessage());
+    }
+    
+    @ExceptionHandler(ValidacaoProdutoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public RespostaApi tratarCamposProduto(ValidacaoProdutoException exception){
+        return new RespostaApi(exception.getLocalizedMessage());
     }
 
 

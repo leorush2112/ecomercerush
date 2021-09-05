@@ -5,10 +5,12 @@ import java.util.List;
 import com.ecommerce.rush.service.Categoria;
 import com.ecommerce.rush.service.Produto;
 
+
+//DTO data transfer Object
 public record ProdutoComCategorias(
     int id,
     String nome,
-    List<Categoria> categoria,
+    List<Categoria> categorias,
     String marca,
     double preco,
     int estoque
