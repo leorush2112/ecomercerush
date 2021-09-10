@@ -1,6 +1,6 @@
 package com.ecommerce.rush.controller;
 
-import com.ecommerce.rush.service.Produto;
+import com.ecommerce.rush.repository.Produto;
 
 public record ProdutoSemCat(
     

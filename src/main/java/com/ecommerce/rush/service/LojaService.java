@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ecommerce.rush.controller.ProdutoSemCat;
 import com.ecommerce.rush.exception.CategoriaInexistenteException;
+import com.ecommerce.rush.repository.Categoria;
 import com.ecommerce.rush.repository.CategoriaRepository;
+import com.ecommerce.rush.repository.Produto;
 import com.ecommerce.rush.repository.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,43 +24,36 @@ public class LojaService {
 
     public Categoria criarCategoria(Categoria categoria) {
 
-        return categoriaRepository.inserirCategoria(categoria);
+        return categoriaRepository.save(categoria);
         
     }
 
     public List<Categoria> listarTodasCategorias() {
 
-        return categoriaRepository.buscarTodasCategorias();
+        return categoriaRepository.findAll();
     }
 
     public Categoria buscarCategoriaPorId(int id){
        
-        Optional<Categoria> categoriaAchou = categoriaRepository.buscarCategoria(id);
+        Optional<Categoria> categoriaAchou = categoriaRepository.findById(id);
         
         if(categoriaAchou.isEmpty()){
             throw new CategoriaInexistenteException(id);
         }
-        return categoriaAchou.get();
-        
+        return categoriaAchou.get();        
     }
 
     public List<Categoria> buscarCategoriaPorListaDeIds(List<Integer> listaCategoriaIds){
-        return categoriaRepository.obterListaCategoriasPorIds(listaCategoriaIds);
+        return categoriaRepository.findAllById(listaCategoriaIds);
     }
 
     public Produto criarProduto(Produto produto) {
-        categoriaRepository.obterListaCategoriasPorIds(produto.getCategoriaIds());
-        produtoRepository.inserirProduto(produto);
-        return produto;
-    }
-
-    public List<Produto> listarProdutosPorCategoria(Categoria categoria)
-    {               
-        return produtoRepository.buscarProdutosPorCategoria(categoria);
+        return produtoRepository.save(produto);
+        
     }
 
     public List<Produto> listarTodosProdutos() {
-        return produtoRepository.buscarTodosProdutos();
+        return produtoRepository.findAll();
     }
 
 }

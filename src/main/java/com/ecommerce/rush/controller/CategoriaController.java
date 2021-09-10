@@ -2,13 +2,12 @@ package com.ecommerce.rush.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.ecommerce.rush.exception.CategoriaInexistenteException;
 import com.ecommerce.rush.exception.ValidacaoException;
-import com.ecommerce.rush.service.Categoria;
+import com.ecommerce.rush.repository.Categoria;
+import com.ecommerce.rush.repository.Produto;
 import com.ecommerce.rush.service.LojaService;
-import com.ecommerce.rush.service.Produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,28 +29,28 @@ public class CategoriaController {
 
     @PostMapping("/categoria")
     @ResponseStatus(HttpStatus.CREATED)
-    public Categoria inserirCategoria(@RequestBody Categoria categoria) {
-        return lojaService.criarCategoria(categoria);
+    public CategoriaSemProduto inserirCategoria(@RequestBody Categoria categoria) {        
+        return CategoriaSemProduto.construir(lojaService.criarCategoria(categoria));
     }
 
     @GetMapping("/categoria")
-    public List<Categoria> mostrarTodasCategorias() {
-        return lojaService.listarTodasCategorias();
+    public List<CategoriaSemProduto> mostrarTodasCategorias() {
+        List<CategoriaSemProduto> listaCategoriasSemProdutos = new ArrayList<>();
+        for(Categoria categoria : lojaService.listarTodasCategorias()){
+            listaCategoriasSemProdutos.add(CategoriaSemProduto.construir(categoria));
+        }
+        return listaCategoriasSemProdutos;        
     }
 
     @GetMapping("/categoria/{id}")
     public CategoriaComProdutos mostrarCategoriaComProdutos(@PathVariable int id){
         
         Categoria categoria = lojaService.buscarCategoriaPorId(id);
-                     
-        List<Produto> produtos = lojaService.listarProdutosPorCategoria(categoria);
-        List<ProdutoSemCat> produtoSemCats = new ArrayList<>();
-        for(Produto produto : produtos){
-            ProdutoSemCat produtoSemCat = ProdutoSemCat.construir(produto);
-            produtoSemCats.add(produtoSemCat);
-        }     
-        CategoriaComProdutos categoriaComProdutos = CategoriaComProdutos.construir(categoria, produtoSemCats);       
-        return categoriaComProdutos;
+        List<ProdutoSemCat> produtosSemCategorias = new ArrayList<>();
+        for(Produto produto : categoria.getProdutos()){
+            produtosSemCategorias.add(ProdutoSemCat.construir(produto));
+        }                      
+        return CategoriaComProdutos.construir(categoria, produtosSemCategorias);   
     }
     
     @ExceptionHandler(ValidacaoException.class)

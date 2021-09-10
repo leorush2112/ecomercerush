@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ecommerce.rush.service.Categoria;
+import com.ecommerce.rush.repository.Categoria;
 import com.ecommerce.rush.service.LojaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

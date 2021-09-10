@@ -2,8 +2,8 @@ package com.ecommerce.rush.controller;
 
 import java.util.List;
 
-import com.ecommerce.rush.service.Categoria;
-import com.ecommerce.rush.service.Produto;
+import com.ecommerce.rush.repository.Categoria;
+import com.ecommerce.rush.repository.Produto;
 
 
 //DTO data transfer Object

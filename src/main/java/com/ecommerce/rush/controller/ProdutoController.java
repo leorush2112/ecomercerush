@@ -1,13 +1,11 @@
 package com.ecommerce.rush.controller;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import com.ecommerce.rush.exception.CategoriaInexistenteException;
 import com.ecommerce.rush.exception.ValidacaoProdutoException;
-import com.ecommerce.rush.service.Categoria;
+import com.ecommerce.rush.repository.Produto;
 import com.ecommerce.rush.service.LojaService;
-import com.ecommerce.rush.service.Produto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,22 +25,17 @@ public class ProdutoController {
     
     @PostMapping("/produto")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoComCategorias inserirProduto(@RequestBody Produto produto) {
-        Produto produtoInserido = lojaService.criarProduto(produto);
-        List<Categoria> categorias = lojaService.buscarCategoriaPorListaDeIds(produtoInserido.getCategoriaIds());
-        return ProdutoComCategorias.construir(produtoInserido, categorias);
+    public Produto inserirProduto(@RequestBody Produto produto) {
+        
+       return lojaService.criarProduto(produto);
+        
     }
 
     @GetMapping("/produto")
-    public List<ProdutoComCategorias> mostrarTodosProdutos() {
-        List<Produto> produtos = lojaService.listarTodosProdutos();
-        List<ProdutoComCategorias> produtosComCategorias = new ArrayList<>();
-        for(Produto produto : produtos){
-            List<Categoria> categorias = lojaService.buscarCategoriaPorListaDeIds(produto.getCategoriaIds());
-            ProdutoComCategorias produtoComCategoria = ProdutoComCategorias.construir(produto, categorias); 
-            produtosComCategorias.add(produtoComCategoria);
-        }
-        return produtosComCategorias;
+    public List<Produto> mostrarTodosProdutos() {
+
+        return lojaService.listarTodosProdutos();
+        
     }
 
     @ExceptionHandler(CategoriaInexistenteException.class)
