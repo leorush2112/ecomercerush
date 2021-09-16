@@ -1,9 +1,12 @@
 package com.ecommerce.rush.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ecommerce.rush.exception.CategoriaInexistenteException;
 import com.ecommerce.rush.exception.ValidacaoProdutoException;
+import com.ecommerce.rush.repository.Categoria;
 import com.ecommerce.rush.repository.Produto;
 import com.ecommerce.rush.service.LojaService;
 
@@ -25,17 +28,28 @@ public class ProdutoController {
     
     @PostMapping("/produto")
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto inserirProduto(@RequestBody Produto produto) {
-        
-       return lojaService.criarProduto(produto);
-        
+    public ProdutoComCategorias inserirProduto(@RequestBody Produto produto) {
+
+        List<Integer> categoriasPorIds = produto.getCategorias()
+                .stream()
+                .map(Categoria::getId)
+                .collect(Collectors.toList());
+
+        List<CategoriaSemProduto> categoriaSemProdutos = lojaService.buscarCategoriaPorListaDeIds(categoriasPorIds)
+                .stream()
+                .map(CategoriaSemProduto::construir)
+                .collect(Collectors.toList());
+
+        return ProdutoComCategorias.construir(lojaService.criarProduto(produto),categoriaSemProdutos);
     }
 
     @GetMapping("/produto")
-    public List<Produto> mostrarTodosProdutos() {
+    public List<ProdutoSemCat> mostrarTodosProdutos() {
 
-        return lojaService.listarTodosProdutos();
-        
+        return lojaService.listarTodosProdutos()
+                .stream()
+                .map(ProdutoSemCat::construir)
+                .collect(Collectors.toList());
     }
 
     @ExceptionHandler(CategoriaInexistenteException.class)

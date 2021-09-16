@@ -10,7 +10,7 @@ import com.ecommerce.rush.repository.Produto;
 public record ProdutoComCategorias(
     int id,
     String nome,
-    List<Categoria> categorias,
+    List<CategoriaSemProduto> categorias,
     String marca,
     double preco,
     int estoque
@@ -18,7 +18,7 @@ public record ProdutoComCategorias(
 ) 
 {
     //Static permite usar o método sem ter instanciado o Objeto
-    public static ProdutoComCategorias construir(Produto produto, List<Categoria> categorias){
+    public static ProdutoComCategorias construir(Produto produto, List<CategoriaSemProduto> categorias){
         return new ProdutoComCategorias(
             produto.getId(),
             produto.getNome(),
